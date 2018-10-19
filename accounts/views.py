@@ -2,13 +2,12 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import auth, messages
 from accounts.forms import UserLoginForm, UserRegistrationForm
 
-def index(request):
-	return render(request, 'index.html')
+
 	
 def logout(request):
 	auth.logout(request)
 	messages.success(request, "You have successfully been logged out!")
-	return redirect(reverse('index'))
+	return redirect(reverse('home'))
 	
 def login(request):
 	login_form = UserLoginForm(request.POST)
@@ -28,7 +27,7 @@ def login(request):
 	
 def registration(request):
 	if request.user.is_authenticated:
-		return redirect(reverse('index'))
+		return redirect(reverse('home'))
 	
 	if request.method == "POST":
 		registration_form = UserRegistrationForm(request.POST)
@@ -41,7 +40,7 @@ def registration(request):
 			if user:
 				auth.login(user=user, request=request)
 				messages.success(request, "You have successfully registered")
-				return redirect(reverse('index'))
+				return redirect(reverse('home'))
 			else:
 				messages.error(request, "Unable to register your account at this time")
 	else:	
