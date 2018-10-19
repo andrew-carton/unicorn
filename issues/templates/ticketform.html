@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block page_title %}Create or Edit Ticket{% endblock %}
+
+{% block page_heading %}Create or Edit Ticket{% endblock %}
+
+{% block content %}
+<form method="POST" style="padding: 7px 7px 7px 7px;">
+			{% csrf_token %}
+			{{ form | as_bootstrap }}
+			<button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+{% endblock %}
