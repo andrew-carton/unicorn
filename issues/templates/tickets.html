@@ -1,0 +1,43 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page_title %}Ticket List{% endblock %}
+
+{% block page_heading %}List of Tickets{% endblock %}
+
+{% block content %}
+<h1> Tickets </h1>
+
+<table style="width:100%">
+  <tr>
+    <th>Title</th>
+    <th>Description</th> 
+    <th>Type</th>
+	<th>Status</th>
+	<th>Feature</th>
+	<th>Votes</th>
+	<th>Created By</th>
+	<th>Created On</th>
+	<th>Closed</th>
+	<th>Closed By</th>
+	<th>Closed On</th>
+  </tr>
+ 
+{% for ticket in tickets %}
+ <tr>
+    <td>{{ ticket.title }}</td>
+    <td>{{ ticket.description }}</td> 
+    <td>{{ ticket.type }}</td>
+	<td>{{ ticket.status }} </td>
+	<td>{{ ticket.feature }} </td>
+	<td>{{ ticket.votes }}</td>
+	<td>{{ ticket.created_by }} </td>
+	<td>{{ ticket.created_on }} </td>
+	<td>{{ ticket.closed }} </td>
+	<td>{{ ticket.closed_by }} </td>
+	<td>{{ ticket.closed_on }} </td>
+</tr>
+{% endfor %} 
+</table>
+
+{% endblock %}
