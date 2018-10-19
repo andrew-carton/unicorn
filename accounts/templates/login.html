@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
+{% load bootstrap_tags %}
+
 {% block page_title %}Login Page{% endblock %}
 
 {% block page_heading %}Login{% endblock %}
 
 {% block content %}
-<form method="POST">
+<form method="POST" style="padding: 7px 7px 7px 7px;">
 			{% csrf_token %}
-			{{ login_form }}
-			<button type="submit">Login</button>
+			{{ login_form | as_bootstrap }}
+			<button type="submit" class="btn btn-default">Login</button>
 </form>
 {% endblock %}
 
