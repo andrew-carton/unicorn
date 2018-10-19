@@ -45,3 +45,13 @@ class Ticket(models.Model):
 
 	
 
+class Comment(models.Model):
+	ticket = models.ForeignKey('Ticket', on_delete=models.CASCADE)
+	comment = models.TextField()
+	created_by = models.CharField(max_length=64)
+	created_on = models.DateTimeField(auto_now_add=True)
+	
+	def __str__(self):
+		return self.comment
+
+		

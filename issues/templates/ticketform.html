@@ -6,10 +6,35 @@
 {% block page_heading %}Create or Edit Ticket{% endblock %}
 
 {% block content %}
+{% if comments.count > 0 %}
+<h3>Comments</h3>
+<br><br>
+<table style="width:100%">
+  <tr>
+    <th>Comment</th>
+	<th>Created By</th>
+	<th>Created On</th>
+  </tr>
+{% endif %}
+
+{% for comment in comments %}
+<tr>
+	<td>{{ comment.comment }}</td>
+	<td>{{ comment.created_by }}</td>
+	<td>{{ comment.created_on }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<br><br>
+
 <form method="POST" style="padding: 7px 7px 7px 7px;">
 			{% csrf_token %}
 			{{ form | as_bootstrap }}
 			<button type="submit" class="btn btn-default">Submit</button>
 </form>
+
+<br><br>
+
 
 {% endblock %}
