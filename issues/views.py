@@ -36,7 +36,8 @@ def create_ticket(request, pk=None):
 			post = form.save()
 			return redirect(tickets)
 	else:
-		form = TicketForm(instance=post)
+			
+		form = TicketForm({'created_by': request.user})
 	comments = Comment.objects.all().filter(ticket=post)
 	create = True
 	
