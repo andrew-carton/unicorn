@@ -23,20 +23,25 @@
 	<th></th>
   </tr>
  
-{% for ticket in tickets %}
+{% for k,v in tickets.items %}
  <tr>
-    <td><a href="{% url 'edit_ticket' ticket.id %}" >{{ ticket.title }}</a></td>
-    <td>{{ ticket.description }}</td> 
-    <td>{{ ticket.type }}</td>
-	<td>{{ ticket.status }} </td>
-	<td>{{ ticket.feature }} </td>
-	<td>{{ ticket.votes }}</td>
-	<td>{{ ticket.created_by }} </td>
-	<td>{{ ticket.created_on }} </td>
-	<td>{{ ticket.closed }} </td>
-	<td>{{ ticket.closed_by }} </td>
-	<td>{{ ticket.closed_on }} </td>
+    <td><a href="{% url 'edit_ticket' k %}" >{{ v.0.title }}</a></td>
+    <td>{{ v.0.description }}</td> 
+    <td>{{ v.0.type }}</td>
+	<td>{{ v.0.status }} </td>
+	<td>{{ v.0.feature }} </td>
+	<td>{{ v.0.votes }}</td>
+	<td>{{ v.0.created_by }} </td>
+	<td>{{ v.0.created_on }} </td>
+	<td>{{ v.0.closed }} </td>
+	<td>{{ v.0.closed_by }} </td>
+	<td>{{ v.0.closed_on }} </td>
 	<td>
+{% if not v.1 %}
+	<form action="{% url 'vote' k %}"><input type="submit" value="Vote" /></form>
+{% endif %}
+
+</td>
 </tr>
 {% endfor %} 
 </table>

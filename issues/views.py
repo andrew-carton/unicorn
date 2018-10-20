@@ -1,12 +1,31 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Ticket, Comment
+from django.contrib.auth.models import User
+from .models import Ticket, Comment, Vote
 from .forms import TicketForm, CommentForm, TicketFormEdit
 
 
 def tickets(request):
+	ticketdict = {}
+	
 	mytickets = Ticket.objects.all().order_by('-created_on')
-	return render(request, "tickets.html", {"tickets" : mytickets})
+	for t in mytickets:
+		ticketdict[t.id] = []
+		ticketdict[t.id].append(t)
+		votes = Vote.objects.all().filter(ticket=t, user=request.user)
+		if votes:
+			ticketdict[t.id].append(True)
+		else:
+			ticketdict[t.id].append(False)
+		
+	args = {}
+	print(ticketdict[4][0])
+	
+	args["tickets"] = ticketdict
+	args["votes"] = votes
+	args["user"] = request.user
+	
+	return render(request, "tickets.html", args)
 	
 def create_ticket(request, pk=None):
 	post = get_object_or_404(Ticket, pk=pk) if pk else None
@@ -20,6 +39,7 @@ def create_ticket(request, pk=None):
 		form = TicketForm(instance=post)
 	comments = Comment.objects.all().filter(ticket=post)
 	create = True
+	
 	return render(request, 'ticketform.html', {'form': form, "comments" : comments, "ticket": post, "create": create})
 	
 def edit_ticket(request, pk=None):
@@ -49,6 +69,15 @@ def create_comment(request, pk=None):
 	
 	return render(request, 'commentform.html', {'form': form})
 	
+
+def vote(request, pk = None):
+	ticket = get_object_or_404(Ticket, pk=pk) if pk else None
+	if ticket:
+		ticket.votes = ticket.votes + 1
+		ticket.save()
+		v = Vote(ticket=ticket, user=request.user)
+		v.save()
+	return redirect(tickets)
 
 	
 	
