@@ -21,6 +21,7 @@
 	<th>Closed</th>
 	<th>Closed By</th>
 	<th>Closed On</th>
+	<th></th>
   </tr>
  
 {% for ticket in tickets %}
@@ -36,6 +37,7 @@
 	<td>{{ ticket.closed }} </td>
 	<td>{{ ticket.closed_by }} </td>
 	<td>{{ ticket.closed_on }} </td>
+	<td>
 </tr>
 {% endfor %} 
 </table>
