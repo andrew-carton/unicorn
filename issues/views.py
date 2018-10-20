@@ -19,7 +19,8 @@ def create_ticket(request, pk=None):
 	else:
 		form = TicketForm(instance=post)
 	comments = Comment.objects.all().filter(ticket=post)
-	return render(request, 'ticketform.html', {'form': form, "comments" : comments})
+	create = True
+	return render(request, 'ticketform.html', {'form': form, "comments" : comments, "ticket": post, "create": create})
 	
 def edit_ticket(request, pk=None):
 	post = get_object_or_404(Ticket, pk=pk) if pk else None
@@ -32,7 +33,8 @@ def edit_ticket(request, pk=None):
 	else:
 		form = TicketFormEdit(instance=post)
 	comments = Comment.objects.all().filter(ticket=post)
-	return render(request, 'ticketform.html', {'form': form, "comments" : comments})
+	create = False
+	return render(request, 'ticketform.html', {'form': form, "comments" : comments, "ticket": post, "create": create})
 	
 def create_comment(request, pk=None):
 	post = get_object_or_404(Comment, pk=pk) if pk else None
