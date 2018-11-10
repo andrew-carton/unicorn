@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse
+
 from .models import Ticket, Comment, Vote
 from .forms import TicketForm, CommentForm, TicketFormEdit
-
+import json
 
 def bugs(request):
 	ticketdict = {}
@@ -21,7 +24,6 @@ def bugs(request):
 			ticketdict[t.id].append(False)
 		
 	args = {}
-	print(ticketdict[4][0])
 	
 	args["tickets"] = ticketdict
 	args["votes"] = votes
@@ -67,18 +69,11 @@ def edit_ticket(request, pk=None):
 	create = False
 	return render(request, 'ticketform.html', {'form': form, "comments" : comments, "ticket": post, "create": create})
 	
-def create_comment(request, pk=None):
-	post = get_object_or_404(Comment, pk=pk) if pk else None
-	mytickets = Comment.objects.all()
-	if request.method == "POST":
-		form = CommentForm(request.POST, request.FILES, instance=post)
-		if form.is_valid():
-			post = form.save()
-			return redirect(bugs)
-	else:
-		form = CommentForm(instance=post)
-	
-	return render(request, 'commentform.html', {'form': form})
+def create_comment(request):
+	data = json.loads(request.body)
+	ticket = get_object_or_404(Ticket, pk=data['id'])
+	comment = Comment.objects.create(ticket=ticket, comment=data['comment'], created_by=request.user)
+	return HttpResponse('') 
 	
 
 def vote(request, pk = None):

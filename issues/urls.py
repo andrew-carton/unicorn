@@ -6,6 +6,6 @@ urlpatterns = [
 	url(r'^ticketform$', create_ticket, name='create_ticket'),
 	url(r'^(?P<pk>\d+)/edit/$', edit_ticket, name='edit_ticket'),
 	url(r'^(?P<pk>\d+)/bug/$', bug, name='bug'),
-	url(r'^commentform$', create_comment, name='create_comment'),
+	url(r'^comment$', create_comment, name='create_comment'),
 	url(r'^(?P<pk>\d+)/vote/$', vote, name='vote') 
 ]
