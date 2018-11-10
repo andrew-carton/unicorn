@@ -1,0 +1,47 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block page_title %}Bug{% endblock %}
+
+{% block page_heading %}Bug{% endblock %}
+
+{% block content %}
+<div class="container bug-page-container">
+	<div class="col">
+		<div class="row"><h5 class="myfont">Title: {{ bug.title }}</h4></div>
+		<div class="row"><h5 class="myfont">Description: {{ bug.description }}</h4></div>
+		<div class="row"><h5 class="myfont">Type: {{ bug.type }}</h4></div>
+		<div class="row"><h5 class="myfont">Status: {{ bug.status }}</h4></div>
+		<div class="row"><h5 class="myfont">Title: {{ bug.votes }}</h4></div>
+		<div class="row"><h5 class="myfont">Created By: {{ bug.created_by }}</h4></div>
+		<div class="row"><h5 class="myfont">Created On: {{ bug.created_on }}</h4></div>
+		<div class="row"><h5 class="myfont">Closed: {{ bug.closed }}</h4></div>
+		<div class="row"><h5 class="myfont">Closed By: {{ bug.closed_by }}</h4></div>
+		<div class="row"><h5 class="myfont">Closed On: {{ bug.closed_on }}</h4></div>
+	</div>
+</div>
+
+<div class="container bug-page-container">
+	<div class="col justify-content-center">
+		<h3> Comments </h3>
+	</div>
+	
+{% for comment in comments %}
+	<div class="col comment">
+		<div class="row"><p class="myfont">Comment: {{ comment.comment }}</p></div>
+		<div class="row"><p class="myfont">Written By: {{ comment.created_by }}</p></div>
+		<div class="row"><p class="myfont">Written On: {{ comment.created_on }}</p></div>
+	</div>
+{% endfor %}
+
+	<div class="col">
+		<h4>Comment:</h4>
+		<textarea name="description" cols="45" rows="5" class="form-control" required="" id="id_description"></textarea>
+		<button type="submit" class="btn btn-primary button-spacing">Add comment</button>
+	</div>
+	
+	
+</div>
+
+{% endblock %}

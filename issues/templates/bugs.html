@@ -1,0 +1,50 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page_title %}Bug List{% endblock %}
+
+{% block page_heading %}Bug List{% endblock %}
+
+{% block content %}
+
+
+<div class="container bugs-page-container">
+	<div class="row justify-content-center">
+
+{% for k,v in tickets.items %}
+
+ <!-- Use bootstrap cards -->
+	<div class="col mb-3">
+        <div class="card" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title myfont">{{ v.0.title }}</h5>
+				
+                <p class="card-text myfont">Description: {{v.0.description|truncatechars:50 }}</p>
+				<p class="card-text myfont">Type: {{v.0.type }}</p>
+				{% if v.0.status == "TODO" %}
+				<p class="card-text myfont todo">Status: {{v.0.status }}</p>
+				{% elif v.0.status == "DOING" %}
+				<p class="card-text myfont doing">Status: {{v.0.status }}</p>
+				{% elif v.0.status == "DONE" %}
+				<p class="card-text myfont done">Status: {{v.0.status }}</p>
+				{% endif %}
+				<p class="card-text myfont">Votes: {{v.0.votes }}</p>
+                {% if not v.1 %}
+				<a href="{% url 'vote' k %}" class="myfont btn btn-primary">Vote</a>
+				{% else %}
+				<a href="{% url 'vote' k %}" class="myfont btn btn-primary disabled">Voted</a>
+				{% endif %}
+
+
+				<a href="{% url 'bug' k %}" class="myfont btn btn-primary">View</a>
+				
+            </div>
+        </div>
+    </div>
+							
+
+{% endfor %} 
+	</div>
+</div>
+
+{% endblock %}

@@ -5,11 +5,13 @@ from .models import Ticket, Comment, Vote
 from .forms import TicketForm, CommentForm, TicketFormEdit
 
 
-def tickets(request):
+def bugs(request):
 	ticketdict = {}
 	
 	mytickets = Ticket.objects.all().order_by('-created_on')
 	for t in mytickets:
+		if t.feature == Ticket.FEATURE:
+			continue
 		ticketdict[t.id] = []
 		ticketdict[t.id].append(t)
 		votes = Vote.objects.all().filter(ticket=t, user=request.user)
@@ -25,7 +27,15 @@ def tickets(request):
 	args["votes"] = votes
 	args["user"] = request.user
 	
-	return render(request, "tickets.html", args)
+	return render(request, "bugs.html", args)
+
+def bug(request, pk=None):
+	bug = get_object_or_404(Ticket, pk=pk) if pk else None
+	comments = Comment.objects.all().filter(ticket=bug)
+	
+	
+	return render(request, "bug.html", {'bug' : bug, "comments": comments})
+	
 	
 def create_ticket(request, pk=None):
 	post = get_object_or_404(Ticket, pk=pk) if pk else None
@@ -50,7 +60,7 @@ def edit_ticket(request, pk=None):
 		form = TicketFormEdit(request.POST, request.FILES, instance=post)
 		if form.is_valid():
 			post = form.save()
-			return redirect(tickets)
+			return redirect(bugs)
 	else:
 		form = TicketFormEdit(instance=post)
 	comments = Comment.objects.all().filter(ticket=post)
@@ -64,7 +74,7 @@ def create_comment(request, pk=None):
 		form = CommentForm(request.POST, request.FILES, instance=post)
 		if form.is_valid():
 			post = form.save()
-			return redirect(tickets)
+			return redirect(bugs)
 	else:
 		form = CommentForm(instance=post)
 	
@@ -78,7 +88,7 @@ def vote(request, pk = None):
 		ticket.save()
 		v = Vote(ticket=ticket, user=request.user)
 		v.save()
-	return redirect(tickets)
+	return redirect(bugs)
 
 	
 	

@@ -18,6 +18,7 @@ def login(request):
 	
 		if user:
 			auth.login(user=user, request=request)
+			return redirect(reverse('home'))
 		else:
 			login_form.add_error(None, "Your username and password is incorrect")
 			

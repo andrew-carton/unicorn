@@ -1,3 +1,102 @@
 form {
 	width : 50%;
 }
+
+.bg { 
+    /* The image used */
+    background-image: url("../images/background.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Used to set my font (Courgette) from Google */
+.myfont {
+    font-family: "Courgette", serif;
+}
+
+/* Used to set font colour  to white */
+.whitefont {
+    color: white;
+}
+
+/* Change the bootstrap defaults for the navbar */
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
+    color: white;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+
+/* Some more navbar overrides for bootstrap */
+.navbar-light .navbar-brand {
+    color: white;
+} 
+
+.navbar-light .navbar-brand:hover {
+    color: white;
+} 
+
+/* Navbar set black */
+.nbar-black {
+    background-color: black;
+}
+
+
+.bug-page-container {
+    padding-top:10px;
+	padding-bottom:10px;
+	padding-left:10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, .7);
+    border-radius: 10px;
+}
+
+.bugs-page-container {
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, .7);
+    border-radius: 10px;
+}
+
+
+
+.comment {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+	padding-left:30px;
+    padding-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px
+    
+}
+
+.button-spacing {
+	padding: 10px;
+	margin-top: 10px;
+	
+}
+
+.todo {
+	background-color : #ff8080;
+}
+
+.doing {
+	background-color: #ffcc80;
+}
+
+.done {
+	background-color: lightgreen;
+}
+
+	
+
+
