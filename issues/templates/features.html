@@ -1,15 +1,15 @@
 
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block page_title %}Bug List{% endblock %}
+{% block page_title %}Feature List{% endblock %}
 
 
-{% block page_heading %}Bug List{% endblock %}
+{% block page_heading %}Feature List{% endblock %}
 
 {% block content %}
 
 
-<div class="container bugs-page-container ">
+<div class="container features-page-container ">
 	<div class="row ">
 
 {% for k,v in tickets.items %}
@@ -36,7 +36,7 @@
 				{% endif %}
 
 
-				<a href="{% url 'bug' k %}" class="myfont btn btn-primary">View</a>
+				<a href="{% url 'feature' k %}" class="myfont btn btn-primary">View</a>
 				<a href="{% url 'edit_ticket' k %}" class="myfont btn btn-primary">Edit</a>
 				
             </div>

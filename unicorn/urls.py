@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^', include('home.urls')),
 	url(r'^accounts/', include('accounts.urls')),
-	url(r'^bugs/', include('issues.urls')),
+	url(r'^issues/', include('issues.urls')),
 ]

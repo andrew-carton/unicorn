@@ -5,9 +5,10 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
 from .models import Ticket, Comment, Vote
-from .forms import TicketForm, CommentForm, TicketFormEdit
+from .forms import TicketForm, TicketFormEdit
 import json
 
+	
 def bugs(request):
 	ticketdict = {}
 	
@@ -31,12 +32,42 @@ def bugs(request):
 	
 	return render(request, "bugs.html", args)
 
+def features(request):
+	ticketdict = {}
+	
+	mytickets = Ticket.objects.all().order_by('-created_on')
+	for t in mytickets:
+		if t.feature != Ticket.FEATURE:
+			continue
+		ticketdict[t.id] = []
+		ticketdict[t.id].append(t)
+		votes = Vote.objects.all().filter(ticket=t, user=request.user)
+		if votes:
+			ticketdict[t.id].append(True)
+		else:
+			ticketdict[t.id].append(False)
+		
+	args = {}
+	
+	args["tickets"] = ticketdict
+	args["votes"] = votes
+	args["user"] = request.user
+	
+	return render(request, "features.html", args)
+	
 def bug(request, pk=None):
 	bug = get_object_or_404(Ticket, pk=pk) if pk else None
 	comments = Comment.objects.all().filter(ticket=bug)
 	
 	
 	return render(request, "bug.html", {'bug' : bug, "comments": comments})
+	
+def feature(request, pk=None):
+	feature = get_object_or_404(Ticket, pk=pk) if pk else None
+	comments = Comment.objects.all().filter(ticket=feature)
+	
+	
+	return render(request, "feature.html", {'feature' : feature, "comments": comments})
 	
 	
 def create_ticket(request, pk=None):
@@ -46,7 +77,7 @@ def create_ticket(request, pk=None):
 		form = TicketForm(request.POST, request.FILES, instance=post)
 		if form.is_valid():
 			post = form.save()
-			return redirect(tickets)
+			return redirect(reverse('home'))
 	else:
 			
 		form = TicketForm({'created_by': request.user})
@@ -62,7 +93,7 @@ def edit_ticket(request, pk=None):
 		form = TicketFormEdit(request.POST, request.FILES, instance=post)
 		if form.is_valid():
 			post = form.save()
-			return redirect(bugs)
+			return redirect(reverse('home'))
 	else:
 		form = TicketFormEdit(instance=post)
 	comments = Comment.objects.all().filter(ticket=post)

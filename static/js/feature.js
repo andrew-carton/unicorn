@@ -11,7 +11,7 @@ function onSubmitComment(comment) {
 	xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState === 4) {
-			window.location.replace("/issues/" + bugId + "/bug");
+			window.location.replace("/issues/" + bugId + "/feature");
 		}
 	}
 	

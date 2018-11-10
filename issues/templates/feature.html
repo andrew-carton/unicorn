@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_tags %}
+{% block page_head %}
+
+<script>
+	bugId = {{ feature.id }}
+	
+</script>
+{% endblock %}
+
+{% block page_title %}Feature{% endblock %}
+
+{% block page_heading %}Feature{% endblock %}
+
+{% block content %}
+<div class="container feature-page-container">
+	<div class="col">
+		<div class="row"><h5 class="myfont">Title: {{ feature.title }}</h4></div>
+		<div class="row"><h5 class="myfont">Description: {{ feature.description }}</h4></div>
+		<div class="row"><h5 class="myfont">Type: {{ feature.type }}</h4></div>
+		<div class="row"><h5 class="myfont">Status: {{ feature.status }}</h4></div>
+		<div class="row"><h5 class="myfont">Votes: {{ feature.votes }}</h4></div>
+		<div class="row"><h5 class="myfont">Created By: {{ feature.created_by }}</h4></div>
+		<div class="row"><h5 class="myfont">Created On: {{ feature.created_on }}</h4></div>
+		<div class="row"><h5 class="myfont">Closed: {{ feature.closed }}</h4></div>
+		<div class="row"><h5 class="myfont">Closed By: {{ feature.closed_by }}</h4></div>
+		<div class="row"><h5 class="myfont">Closed On: {{ feature.closed_on }}</h4></div>
+	</div>
+</div>
+
+<div class="container feature-page-container">
+	<div class="col justify-content-center">
+		<h3> Comments </h3>
+	</div>
+	
+{% for comment in comments %}
+	<div class="col comment">
+		<div class="row"><p class="myfont">Comment: {{ comment.comment }}</p></div>
+		<div class="row"><p class="myfont">Written By: {{ comment.created_by }}</p></div>
+		<div class="row"><p class="myfont">Written On: {{ comment.created_on }}</p></div>
+	</div>
+{% endfor %}
+
+	<div class="col">
+		<h4>Comment:</h4>
+		{% csrf_token %}
+		<textarea name="description" cols="45" rows="5" class="form-control" required="" id="mycomment"></textarea>
+		<button type="submit" onclick="javascript:onSubmitComment();" class="btn btn-primary button-spacing">Add comment</button>
+	</div>
+	
+	
+</div>
+
+{% endblock %}
+
+
+{% block jsincludes %}
+<script src="{% static 'js/feature.js' %}"></script>
+{% endblock %}

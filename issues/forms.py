@@ -12,7 +12,3 @@ class TicketFormEdit(forms.ModelForm):
 		model = Ticket
 		fields = ('title', 'description', 'type', 'status', 'closed', 'closed_by', 'closed_on')
 		
-class CommentForm(forms.ModelForm):
-	class Meta:
-		model = Comment
-		fields = ('ticket', 'comment', 'created_by')
