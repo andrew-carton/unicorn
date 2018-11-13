@@ -1,0 +1,59 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page_head %}
+<script src="https://d3js.org/d3.v5.min.js"></script>
+{% endblock %}
+
+{% block  body_attrs %} onload="javascript:onGraphLoad();" {% endblock %}
+{% block page_title %}Graphs{% endblock %}
+
+
+{% block page_heading %}Graphs{% endblock %}
+
+{% block content %}
+
+<div class="container">
+<div class="row justify-content-center">
+<h4 class="myfont">Progress Statistics of All Tickets</h4>
+</div> 
+
+<div class="row justify-content-center">
+
+<div class="column justify-content-center">
+<div id="progressstats" class="text-center"></div>
+</div>
+<div class="column justify-content-center">
+<div id="progressstats1" class="text-center"></div>
+</div>
+</div>
+<div class="row justify-content-center">
+<h4 class="myfont">Daily Statistics of Completed Tickets</h4>
+</div>
+
+<div class="row justify-content-center">
+<div id="dailystats" class="text-center"></div>
+</div>
+<div class="row justify-content-center">
+<h4 class="myfont">Weekly Statistics of Completed Tickets</h4>
+</div>
+
+<div class="row justify-content-center">
+<div id="weeklystats" class="text-center"></div>
+</div>
+
+<div class="row justify-content-center">
+<h4 class="myfont">Monthly Statistics of Completed Tickets</h4>
+</div>
+
+
+<div class="row justify-content-center">
+<div id="monthlystats" class="text-center"></div>
+</div>
+</div>
+{% endblock %}
+
+{% block jsincludes %} 
+<script type="text/javascript" src="{% static 'js/graphs.js' %}"></script>
+{% endblock %}
+

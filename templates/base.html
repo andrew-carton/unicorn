@@ -11,7 +11,7 @@
 		{% block headjs %} {% endblock %}
 	</head>
 	
-	<body class="bg">
+	<body class="bg" {% block body_attrs %}{% endblock %}>
 		<header class="myheader container">
 			<h1 class="mytitlefont mytitle">Unicorn Attractor</h1>
 			<h2 class="mydescription myfont">. . . an issue tracker website.</h2>
@@ -24,6 +24,7 @@
 					
 					<ul class="navbar-nav ml-auto">
 						{% if user.is_authenticated %}
+							<li class="nav-item"><a class="nav-link myfont" href="{% url 'graphs' %}"><i class="fas fa-chart-pie"></i> Graphs</a></li>
 							<li class="nav-item"><a class="nav-link myfont" href="{% url 'bugs' %}"><i class="fas fa-bug"></i> Bug List</a></li>
 							<li class="nav-item"><a class="nav-link myfont" href="{% url 'features' %}"><i class="fas fa-screwdriver"></i> Feature List</a></li>
 							<li class="nav-item"><a class="nav-link myfont" href="{% url 'create_ticket' %}"><i class="fas fa-ticket-alt"></i> Create Ticket</a></li>
