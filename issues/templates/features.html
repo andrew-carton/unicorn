@@ -30,7 +30,7 @@
 				{% endif %}
 				<p class="card-text myfont">Votes: {{v.0.votes }}</p>
                 {% if not v.1 %}
-				<a href="{% url 'vote' k %}" class="myfont btn btn-primary">Vote</a>
+				<a href="{% url 'checkout' k %}" class="myfont btn btn-primary">Vote</a>
 				{% else %}
 				<a href="{% url 'vote' k %}" class="myfont btn btn-primary disabled">Voted</a>
 				{% endif %}
