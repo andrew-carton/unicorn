@@ -3,25 +3,30 @@ from django.http import JsonResponse
 from issues.models import Ticket
 import datetime
 
+# Render the graphs page
 def graphs(request):
 	return render(request, 'graphs.html')
 
+# Progress graph page
 def progress(request):
+    # The data to be held
 	data = []
 
-	
+	# Get all tickets
 	mytickets = Ticket.objects.all()
 	
+	# Iterate over tickets
 	for ticket in mytickets:
 		found = 0
 		for i in data:
+    		# If found increase amount
 			if i['progress'] == ticket.status:
 				i['amount'] = i['amount'] + 1
 				found = 1
 				break
 			else:
 				found = 0
-				
+		# If new ticket -- add the dict to list
 		if found == 0:
 			progress = dict()
 			progress['progress'] = ticket.status
@@ -29,18 +34,26 @@ def progress(request):
 			data.append(progress)
 			
 
-
+	# Serialise to JSON
 	return JsonResponse(data, safe=False)
 	
+# Daily graph
 def daily(request):
+    # The stored data
 	data = []
+	# Get all tickets
 	mytickets = Ticket.objects.all()
+
+	## Today's date
 	today = datetime.date.today()
+
+	## Week ago from today
 	week_ago = today - datetime.timedelta(days=7)
 	
 	
 	current = week_ago
 	
+	# Add the days to array
 	daily = {}
 	daily['day'] = "Mon"
 	daily['amount'] = 0
@@ -77,12 +90,16 @@ def daily(request):
 	data.append(daily)
 	
 	
+	#  Iterate over tickets
 	for ticket in mytickets:
 		if ticket.closed_on == None:
 			continue
 			
+		# Ticket closed date
 		ticketdate = ticket.closed_on.date()
+		# If ticket is in range of a week ago
 		if (ticketdate >= week_ago and ticketdate <= today):
+    		# Increment counter on specific day
 			if ticketdate.weekday() == 0:
 				for i in data:
 					if i['day'] == "Mon":
@@ -115,17 +132,21 @@ def daily(request):
 	
 	return JsonResponse(data, safe=False)
 	
-	
+# Weekly graph
 def weekly(request):
+    # Data collected
 	data = []
+	# Get all tickets
 	mytickets = Ticket.objects.all()
 	today = datetime.date.today()
 	
+	# Get all weeks in last month
 	one_week_ago = today - datetime.timedelta(days=7)
 	two_weeks_ago = today - datetime.timedelta(days=14)
 	three_weeks_ago = today - datetime.timedelta(days=21)
 	four_weeks_ago = today - datetime.timedelta(days=28)
 	
+	## Arrange data for JSON
 	weekly = {}
 	weekly['week'] = "Week 1"
 	weekly['amount'] = 0
@@ -146,13 +167,15 @@ def weekly(request):
 	weekly['amount'] = 0
 	data.append(weekly)
 	
-	
+	# Iterate through tickets
 	for ticket in mytickets:
+    	## If it's closed - skip
 		if ticket.closed_on == None:
 			continue
 			
 		ticketdate = ticket.closed_on.date()
 		
+		# Figure out which date it lands in and iterate that week
 		if (ticketdate <= today and ticketdate > one_week_ago):
 			for i in data:
 				if i['week'] == 'Week 4':
@@ -174,13 +197,15 @@ def weekly(request):
 	return JsonResponse(data, safe=False)
 	
 
-	
+# Monthly graph	
 def monthly(request):
+    # Data held
 	data = []
+	# Get all tickets
 	mytickets = Ticket.objects.all()
 	today = datetime.date.today()
 	
-	
+	# Create the JSON data structures
 	monthly = {}
 	monthly['month'] = "Jan"
 	monthly['amount'] = 0
@@ -241,13 +266,14 @@ def monthly(request):
 	monthly['month'] = "Dec"
 	monthly['amount'] = 0
 	data.append(monthly)
-		
+	
+	# Iterate thru tickets
 	for ticket in mytickets:
 		if ticket.closed_on == None:
 			continue
 			
 		ticketdate = ticket.closed_on.date()
-		
+		# Increment data of month
 		for i in data:
 			if i['month'] == ticketdate.strftime("%b"):
 				i['amount'] = i['amount'] + 1
