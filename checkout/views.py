@@ -7,17 +7,23 @@ from django.utils import timezone
 from issues.models import Ticket, Vote
 import stripe
 
+# The stripe secret
 stripe.api_key = settings.STRIPE_SECRET
+
+# The checkout processing view
 
 @login_required()
 def checkout(request, pk=None):
+	# The total amount for the feature is 50
 	total = 50
+	# Get the feature
 	feature = get_object_or_404(Ticket, pk=pk) if pk else None
 	if request.method=="POST":
 		order_form = OrderForm(request.POST)
 		payment_form = MakePaymentForm(request.POST)
 		
 		if order_form.is_valid() and payment_form.is_valid():
+			# Save the payment
 			order = order_form.save(commit=False)
 			order.date = timezone.now()
 			order.save()
@@ -25,6 +31,7 @@ def checkout(request, pk=None):
 			
 			
 			try:
+				# Make the payment to Stripe
 				customer = stripe.Charge.create(
 					amount = int(total * 100),
 					currency = "EUR",
@@ -36,6 +43,7 @@ def checkout(request, pk=None):
 				
 			if customer.paid:
 				messages.error(request, "You have successfully paid")
+				# Increase the votes of that feature.
 				if feature:
 					feature.votes = feature.votes + 1
 					feature.save()
