@@ -74,7 +74,7 @@ def features(request):
 def bug(request, pk=None):
     bug = get_object_or_404(Ticket, pk=pk) if pk else None
 
-	# Get all comments associated with bug
+    # Get all comments associated with bug
     comments = Comment.objects.all().filter(ticket=bug)
 
     return render(request, "bug.html", {'bug': bug, "comments": comments})
@@ -84,7 +84,7 @@ def bug(request, pk=None):
 def feature(request, pk=None):
     feature = get_object_or_404(Ticket, pk=pk) if pk else None
 
-	# Get all comments associated with feature
+    # Get all comments associated with feature
     comments = Comment.objects.all().filter(ticket=feature)
 
     return render(request, "feature.html", {'feature': feature, "comments": comments})
@@ -94,13 +94,13 @@ def feature(request, pk=None):
 def create_ticket(request, pk=None):
     post = get_object_or_404(Ticket, pk=pk) if pk else None
 
-	# Sort tickets by created -on
+    # Sort tickets by created -on
     mytickets = Ticket.objects.all().order_by('-created_on')
     if request.method == "POST":
-    	# Create the ticket form
+        # Create the ticket form
         form = TicketForm(request.POST, request.FILES, instance=post)
 
-		# Test if valid and save and redirect home
+        # Test if valid and save and redirect home
         if form.is_valid():
             post = form.save()
             return redirect(reverse('home'))
@@ -108,22 +108,24 @@ def create_ticket(request, pk=None):
 
         form = TicketForm({'created_by': request.user})
 
-	# Get all comments
+        # Get all comments
     comments = Comment.objects.all().filter(ticket=post)
 
-	# Set to true for this page
+    # Set to true for this page
     create = True
 
     return render(request, 'ticketform.html', {'form': form, "comments": comments, "ticket": post, "create": create})
 
 # Edit ticket request
+
+
 def edit_ticket(request, pk=None):
     post = get_object_or_404(Ticket, pk=pk) if pk else None
-	# Get all tickets by created_on
+    # Get all tickets by created_on
     mytickets = Ticket.objects.all().order_by('-created_on')
 
     if request.method == "POST":
-    	# Get ticket form edit box
+        # Get ticket form edit box
         form = TicketFormEdit(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
@@ -131,7 +133,7 @@ def edit_ticket(request, pk=None):
     else:
         form = TicketFormEdit(instance=post)
 
-	# Get all comments
+        # Get all comments
     comments = Comment.objects.all().filter(ticket=post)
     create = False
     return render(request, 'ticketform.html', {'form': form, "comments": comments, "ticket": post, "create": create})
@@ -143,7 +145,7 @@ def create_comment(request):
     data = json.loads(request.body)
     ticket = get_object_or_404(Ticket, pk=data['id'])
 
-	# Create comment
+    # Create comment
     comment = Comment.objects.create(
         ticket=ticket, comment=data['comment'], created_by=request.user)
     return HttpResponse('')
@@ -153,10 +155,10 @@ def create_comment(request):
 def vote(request, pk=None):
     ticket = get_object_or_404(Ticket, pk=pk) if pk else None
     if ticket:
-    	# Increment votes now
+        # Increment votes now
         ticket.votes = ticket.votes + 1
         ticket.save()
-		# Create a ticket-user entry
+        # Create a ticket-user entry
         v = Vote(ticket=ticket, user=request.user)
         v.save()
     return redirect(bugs)
