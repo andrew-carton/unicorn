@@ -1,12 +1,20 @@
 from django import forms
 from .models import Ticket, Comment
 
-	
+
+"""
+	Ticket Form 
+"""
 class TicketForm(forms.ModelForm):
 	class Meta:
 		model = Ticket
 		fields = ('title', 'description', 'type', 'status', 'feature', 'created_by', 'created_on', 'closed', 'closed_by', 'closed_on')
 
+"""
+	Ticket Form Edit Box
+
+	-- validation checks for status 
+"""
 class TicketFormEdit(forms.ModelForm):
 	class Meta:
 		model = Ticket
