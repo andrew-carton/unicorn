@@ -24,6 +24,7 @@
 					
 					<ul class="navbar-nav ml-auto">
 						{% if user.is_authenticated %}
+							<li class="nav-item"><a class="nav-link myfont" href="{% url 'account_info' %}"><i class="fas fa-user-alt"></i> Account Info</a></li>
 							<li class="nav-item"><a class="nav-link myfont" href="{% url 'graphs' %}"><i class="fas fa-chart-pie"></i> Graphs</a></li>
 							<li class="nav-item"><a class="nav-link myfont" href="{% url 'bugs' %}"><i class="fas fa-bug"></i> Bug List</a></li>
 							<li class="nav-item"><a class="nav-link myfont" href="{% url 'features' %}"><i class="fas fa-screwdriver"></i> Feature List</a></li>

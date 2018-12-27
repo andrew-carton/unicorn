@@ -19,7 +19,7 @@ class TestViews(TestCase):
         self.assertEqual(page.status_code, 200)
         self.assertTemplateUsed(page, "registration.html")
 
-    # Test the logout page
+    # Test the logout pageF
     def test_get_logout_page(self):
         page = self.client.get("/accounts/logout/")
         self.assertEqual(page.status_code, 302)

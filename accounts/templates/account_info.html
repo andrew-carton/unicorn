@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page_title %}Account Information{% endblock %}
+
+
+{% block page_heading %}Account Information{% endblock %}
+
+{% block content %}
+
+<h4>Username: {{request.user}}</h4>
+<h4>Email: {{request.user.email}}</h4>
+
+<h4>Ticket List: You have {{tickets.count}} tickets</h4>
+
+<div class="container bugs-page-container ">
+	<div class="row ">
+
+{% for t in tickets %}
+
+	<div class="col mb-3">
+        <div class="card border-dark" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title myfont">{{ t.title }}</h5>
+				
+                <p class="card-text myfont">Description: {{t.description|truncatechars:50 }}</p>
+				<p class="card-text myfont">Type: {{t.type }}</p>
+				{% if v.0.status == "TODO" %}
+				<p class="card-text myfont todo">Status: {{t.status }}</p>
+				{% elif v.0.status == "DOING" %}
+				<p class="card-text myfont doing">Status: {{t.status }}</p>
+				{% elif v.0.status == "DONE" %}
+				<p class="card-text myfont done">Status: {{t.status }}</p>
+				{% endif %}
+				<p class="card-text myfont">Votes: {{t.votes }}</p>
+
+                {% if t.feature == Ticket.FEATURE %}
+				    <a href="{% url 'feature' t.id %}" class="myfont btn btn-primary">View</a>
+                {% else %}
+                    <a href="{% url 'bug' t.id %}" class="myfont btn btn-primary">View</a>
+                {% endif %}
+				<a href="{% url 'edit_ticket' t.id %}" class="myfont btn btn-primary">Edit</a>
+				
+            </div>
+        </div>
+    </div>
+							
+
+{% endfor %} 
+	</div>
+</div>
+
+{% endblock %}
+

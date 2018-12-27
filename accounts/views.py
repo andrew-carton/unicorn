@@ -1,6 +1,20 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import auth, messages
 from accounts.forms import UserLoginForm, UserRegistrationForm
+from issues.models import Ticket
+
+
+"""
+    The Account information displaying the tickets created
+"""
+
+
+def account_info(request):
+
+    # Order tickets by created_on
+    mytickets = Ticket.objects.all().order_by('-created_on')
+
+    return render(request, "account_info.html", {'tickets' : mytickets })
 
 
 """
@@ -62,28 +76,28 @@ def registration(request):
         return redirect(reverse('home'))
 
     if request.method == "POST":
-    	# Registration form
+        # Registration form
         registration_form = UserRegistrationForm(request.POST)
 
-		# Test if validated correctly
+        # Test if validated correctly
         if registration_form.is_valid():
             registration_form.save()
-			# Authenticate user with password
+            # Authenticate user with password
             user = auth.authenticate(
                 username=request.POST['username'], password=request.POST['password1'])
 
-			# Test if user authenticated correctly
+            # Test if user authenticated correctly
             if user:
-    			# login
+                        # login
                 auth.login(user=user, request=request)
-				# success message send
+                # success message send
                 messages.success(request, "You have successfully registered")
                 return redirect(reverse('home'))
             else:
-    			# error message if not authenticated
+                        # error message if not authenticated
                 messages.error(
                     request, "Unable to register your account at this time")
     else:
-    	# display empty registration form
+        # display empty registration form
         registration_form = UserRegistrationForm()
     return render(request, 'registration.html', {"registration_form": registration_form})
