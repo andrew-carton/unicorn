@@ -17,7 +17,7 @@ def bugs(request):
 
     # Order tickets by created_on
     mytickets = Ticket.objects.all().order_by('-created_on')
-
+    votes = None
     # Iterate through tickets
     for t in mytickets:
         if t.feature == Ticket.FEATURE:
@@ -45,7 +45,7 @@ def bugs(request):
 def features(request):
     # Ticket dictionary to hold tickets-votes
     ticketdict = {}
-
+    votes = None
     # Get all tickets, sorted by created on
     mytickets = Ticket.objects.all().order_by('-created_on')
 

@@ -23,3 +23,7 @@ class TestViews(TestCase):
     def test_get_logout_page(self):
         page = self.client.get("/accounts/logout/")
         self.assertEqual(page.status_code, 302)
+
+    def test_get_account_info(self):
+        page = self.client.get("/accounts/account_info/")
+        self.assertEquals(page.status_code, 200)
