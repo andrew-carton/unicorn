@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
+from datetime import date
 
 # Priority types
 TYPE_PRIORITY = (
@@ -45,7 +45,7 @@ class Ticket(models.Model):
     feature = models.CharField(max_length=7, choices=ISSUES, default=BUG)
     votes = models.IntegerField(default=0)
     created_by = models.CharField(max_length=64)
-    created_on = models.DateTimeField(default=timezone.now)
+    created_on = models.DateTimeField(default=date.today)
     closed = models.BooleanField(default=False)
     closed_by = models.CharField(max_length=64, blank=True, null=True)
     closed_on = models.DateTimeField(blank=True, null=True)
