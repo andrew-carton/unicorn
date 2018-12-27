@@ -34,7 +34,7 @@
 				{% endif %}
 				<p class="card-text myfont">Votes: {{t.votes }}</p>
 
-                {% if t.feature == Ticket.FEATURE %}
+                {% if t.feature == "FEATURE" %}
 				    <a href="{% url 'feature' t.id %}" class="myfont btn btn-primary">View</a>
                 {% else %}
                     <a href="{% url 'bug' t.id %}" class="myfont btn btn-primary">View</a>
