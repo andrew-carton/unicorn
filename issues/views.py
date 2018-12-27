@@ -94,8 +94,7 @@ def feature(request, pk=None):
 def create_ticket(request, pk=None):
     post = get_object_or_404(Ticket, pk=pk) if pk else None
 
-    # Sort tickets by created -on
-    mytickets = Ticket.objects.all().order_by('-created_on')
+   
     if request.method == "POST":
         # Create the ticket form
         form = TicketForm(request.POST, request.FILES, instance=post)
@@ -121,8 +120,6 @@ def create_ticket(request, pk=None):
 
 def edit_ticket(request, pk=None):
     post = get_object_or_404(Ticket, pk=pk) if pk else None
-    # Get all tickets by created_on
-    mytickets = Ticket.objects.all().order_by('-created_on')
 
     if request.method == "POST":
         # Get ticket form edit box
@@ -146,7 +143,7 @@ def create_comment(request):
     ticket = get_object_or_404(Ticket, pk=data['id'])
 
     # Create comment
-    comment = Comment.objects.create(
+    Comment.objects.create(
         ticket=ticket, comment=data['comment'], created_by=request.user)
     return HttpResponse('')
 
