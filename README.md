@@ -20,6 +20,23 @@ The bugs/features pages (bugs.png/features.png in ui folder) present the bugs/fe
 
 The graphs page (graphs.png in the ui folder) is the graph page that allows a user to view the statistics of the bug/features in a visual format. There are five types of statistics. The first two graphs include a bar chart and pie chart of progress statistics of all tickets. The third statistic shows the daily stats. The fourth statistics shows the weekly stats. The fifth statistics shows the monthly stats
 
+TESTING:
+
+Testing - Test Plan: The test plan is to cover as much of the code as possible, both in the backend and the frontend of the unicorn issue tracker application. The items to be tested are the models, views and controllers.
+
+Testing - Test Implementation: The test implementation is implemented according to the code-institute code testing tutorials - in an automated way. In implementation of the automated testing covers as much as possible of the code that can be automated. The automated testing is implemented in django's 'unittest' framework, which is part of django. The output of the automated testing, after being run, should be success or failure.
+
+Testing - automated testing. To run use the command line: python manage.py test
+
+The output results after running this should be similar to below:...
+
+Ran 28 tests in 1.25s
+
+OK
+
+
+
+
 INSTALLATION AND DEPLOYMENT
 To install:
 
