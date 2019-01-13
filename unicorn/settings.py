@@ -26,7 +26,7 @@ SECRET_KEY = 'r!3hsifeq_j18xt^ad&y6m8pjc=8o9d9x0ee3&zez4#q_9^v%o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["unicornproj.herokuapp.com"]
 
 
 # Application definition
