@@ -19,3 +19,21 @@ The create ticket page (createticket.png in ui folder) is the way in which a use
 The bugs/features pages (bugs.png/features.png in ui folder) present the bugs/features to the user. Each page presents text boxes or 'cards' around each bug or feature with information about each, so the user can tell at a glance what they are about. The user can view more information about the bug or feature by clicking the view button or edit the information clicking the edit button. The user can also upvote a bug or feature using the vote button. If the item is a feature, then the user must pay 50 euro to proceed to upvote that item.
 
 The graphs page (graphs.png in the ui folder) is the graph page that allows a user to view the statistics of the bug/features in a visual format. There are five types of statistics. The first two graphs include a bar chart and pie chart of progress statistics of all tickets. The third statistic shows the daily stats. The fourth statistics shows the weekly stats. The fifth statistics shows the monthly stats
+
+INSTALLATION AND DEPLOYMENT
+To install:
+
+Install Django
+Install SQLAlchemy library
+run python manage.py runserver to run the application
+
+
+To deploy on heroku:
+
+Create a new project on heroku and give it a unique name - in this case unicornproj was used.
+Under deploy settings link the heroku application to github and choose the master branch to deploy.
+Enable Manual Deployment
+The requirements.txt lists the dependancies and takes care they are installed on heroku
+The proc file should take care of the installers and running the executable file 'manage.py'
+Heroku Deployment: https://unicornproj.herokuapp.com/
+
